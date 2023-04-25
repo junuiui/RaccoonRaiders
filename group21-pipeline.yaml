@@ -1,0 +1,19 @@
+- pipeline: "Build"
+  events:
+  - type: "PUSH"
+    refs:
+    - "refs/heads/master"
+  fail_on_prepare_env_warning: true
+  actions:
+  - action: "Execute make"
+    type: "BUILD"
+    docker_image_name: "library/alpine"
+    docker_image_tag: "latest"
+    execute_commands:
+    - "make"
+    setup_commands:
+    - "apk update && apk add openjdk11 && apk add make && apk add maven"
+    volume_mappings:
+    - "/:/buddy/group21"
+    cache_base_image: true
+    shell: "SH"
